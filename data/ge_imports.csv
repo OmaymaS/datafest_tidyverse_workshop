@@ -1,4 +1,4 @@
-code,region,country,year,month,imports_usd
+code,region,country,year,month,amount_usd
 40,EU countries,Austria,1995,Jan,38.682
 56,EU countries,Belgium,1995,Jan,38.794000000000004
 100,EU countries,Bulgaria,1995,Jan,9.172
