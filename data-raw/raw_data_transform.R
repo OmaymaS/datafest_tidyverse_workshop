@@ -1,12 +1,27 @@
+## capture args from command line
+args <-  commandArgs(trailingOnly=TRUE)
+
+## EXAMPLE in project home directory:
+## Rscript ./data-raw/raw_data_transform.R "data-raw/Export Country_1995-2018_eng.xlsx" "data/ge_exports.csv"
+## Rscript ./data-raw/raw_data_transform.R "data-raw/Import Country 1995-2018_eng.xlsx" "data/ge_imports.csv"
+
 ## load libraries --------------------------------------------------------------
 library(here)
 library(tidyverse)
 library(readxl)
-
-
 ## read raw data ---------------------------------------------------------------
-data_imports <- read_xlsx(path = paste0(here::here(), "/data-raw/Import Country 1995-2018_eng.xlsx"),
+
+data_imports <- read_xlsx(path = paste0(here::here(), "/", args[1]),
                           sheet = "1995-2017-months_copy")
+
+
+# data_imports <- read_xlsx(path = paste0(here::here(), "/data-raw/Import Country 1995-2018_eng.xlsx"),
+#                           sheet = "1995-2017-months_copy")
+
+
+# data_exports <- read_xlsx(path = paste0(here::here(), "/data-raw/Export Country_1995-2018_eng.xlsx"),
+#                           sheet = "1995-2017-months_copy")
+
 
 ## replace column names with years ---------------------------------------------
 
@@ -56,11 +71,11 @@ ge_imports <- data_imports_mod %>%
   mutate(imports_usd = as.double(imports_usd)) %>% 
   select(code, region, country = countries, year, month = month_name, imports_usd)
 
-
+head(ge_imports)
 ## save dataframe --------------------------------------------------------------
 
 ## create data dir if it does not exist
 if(!dir.exists(paste0(here::here(), "/data")))
   dir.create(paste0(here::here(), "/data"))
 
-write_csv(ge_imports, paste0(here::here(), "/data/ge_imports.csv"))
+write_csv(ge_imports, paste0(here::here(), "/", args[2])) 
