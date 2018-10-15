@@ -1,44 +1,66 @@
+## load libraries --------------------------------------------------------------
 library(here)
 library(tidyverse)
 library(readxl)
 
 
-## read data
+## read raw data ---------------------------------------------------------------
 data_imports <- read_xlsx(path = paste0(here::here(), "/data-raw/Import Country 1995-2018_eng.xlsx"),
                           sheet = "1995-2017-months_copy")
 
 ## replace column names with years ---------------------------------------------
-cnames_from4 <- names(data_imports) %>% tail(-3)  ## exclude first 3 columns
 
-## function to replace colun names
+## FUNCTION to replace column names#############################################
 set_year <- function(x){
   
-  for(i in 2:length(x))
-    if(grepl("X", x[i]))
+  for(i in 1:length(x))
+    if(grepl("X_", x[i]))
       x[i] <- paste(x[i-1])
     return(x)
 }
 
-cnames_from4_mod <- set_year(k) %>% 
+## exclude first 3 columns
+cnames_from4 <- names(data_imports) %>% tail(-3)  
+
+## set the colum name according to the previous
+cnames_from4_mod <- set_year(cnames_from4) %>% 
   imap_chr( ~ paste0(.x,"-", .y))
 
+## update column names
 names(data_imports)[4:length(names(data_imports))] <- cnames_from4_mod
 
-
-## modify data
+## modify data -----------------------------------------------------------------
 data_imports_mod <- data_imports %>% 
-  gather(year, value, -Code, -Region, -Countries) %>% 
-  filter(value != "Total") %>% 
+  gather(year, imports_usd, -Code, -Region, -Countries) %>% 
+  # filter(imports_usd != "Total") %>%   
   separate(year, c("year", "month_proxy")) %>% 
-  group_by(year)
+  filter((as.integer(month_proxy) %% 13) != 0)
 
-## find group indecies 
+## add group indecies corresponding to each year
 ## NOTE: FAILED in mutate
-data_imports_mod$gp_idx <-  group_indices(data_imports_mod)-1
+# data_imports_mod$gp_idx <-  group_indices(data_imports_mod)-1
+data_imports_mod$gp_idx <- data_imports_mod %>% 
+  group_by(year) %>% 
+  group_indices()-1
 
-
+## add month according to formula based on month_proxy and group index
+## NOTE: THIS IS SPECIFIC TO THE STRUCTURE OF THE RAW DATA USED HERE
 data_imports_mod <- data_imports_mod %>% 
   mutate(month = as.integer(month_proxy)-(13*gp_idx)) %>% 
+  mutate(month_name = month.abb[month]) %>% 
   filter(!is.na(Countries))
 
+## prepare the final dataframe to save -----------------------------------------
+ge_imports <- data_imports_mod %>% 
+  rename_all(funs(tolower(.))) %>% 
+  mutate(imports_usd = as.double(imports_usd)) %>% 
+  select(code, region, country = countries, year, month = month_name, imports_usd)
 
+
+## save dataframe --------------------------------------------------------------
+
+## create data dir if it does not exist
+if(!dir.exists(paste0(here::here(), "/data")))
+  dir.create(paste0(here::here(), "/data"))
+
+write_csv(ge_imports, paste0(here::here(), "/data/ge_imports.csv"))
