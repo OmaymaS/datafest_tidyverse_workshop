@@ -11,7 +11,7 @@ library(tidyverse)
 library(readxl)
 
 ## read raw data ---------------------------------------------------------------
-data_imports <- read_xlsx(path = paste0(here::here(), "/", args[1]),
+data_raw <- read_xlsx(path = paste0(here::here(), "/", args[1]),
                           sheet = "1995-2017-months_copy")
 
 
@@ -35,41 +35,41 @@ set_year <- function(x){
 }
 
 ## exclude first 3 columns
-cnames_from4 <- names(data_imports) %>% tail(-3)  
+cnames_from4 <- names(data_raw) %>% tail(-3)  
 
 ## set the colum name according to the previous
 cnames_from4_mod <- set_year(cnames_from4) %>% 
   imap_chr( ~ paste0(.x,"-", .y))
 
 ## update column names
-names(data_imports)[4:length(names(data_imports))] <- cnames_from4_mod
+names(data_raw)[4:length(names(data_raw))] <- cnames_from4_mod
 
 ## modify data -----------------------------------------------------------------
-data_imports_mod <- data_imports %>% 
-  gather(year, imports_usd, -Code, -Region, -Countries) %>% 
-  # filter(imports_usd != "Total") %>%   
+data_raw_mod <- data_raw %>% 
+  gather(year, amount_usd, -Code, -Region, -Countries) %>% 
+  # filter(amount_usd != "Total") %>%   
   separate(year, c("year", "month_proxy")) %>% 
   filter((as.integer(month_proxy) %% 13) != 0)
 
 ## add group indecies corresponding to each year
 ## NOTE: FAILED in mutate
-# data_imports_mod$gp_idx <-  group_indices(data_imports_mod)-1
-data_imports_mod$gp_idx <- data_imports_mod %>% 
+# data_raw_mod$gp_idx <-  group_indices(data_raw_mod)-1
+data_raw_mod$gp_idx <- data_raw_mod %>% 
   group_by(year) %>% 
   group_indices()-1
 
 ## add month according to formula based on month_proxy and group index
 ## NOTE: THIS IS SPECIFIC TO THE STRUCTURE OF THE RAW DATA USED HERE
-data_imports_mod <- data_imports_mod %>% 
+data_raw_mod <- data_raw_mod %>% 
   mutate(month = as.integer(month_proxy)-(13*gp_idx)) %>% 
   mutate(month_name = month.abb[month]) %>% 
   filter(!is.na(Countries))
 
 ## prepare the final dataframe to save -----------------------------------------
-ge_imports <- data_imports_mod %>% 
+ge_imports <- data_raw_mod %>% 
   rename_all(funs(tolower(.))) %>% 
-  mutate(imports_usd = as.double(imports_usd)) %>% 
-  select(code, region, country = countries, year, month = month_name, imports_usd)
+  mutate(amount_usd = as.double(amount_usd)) %>% 
+  select(code, region, country = countries, year, month = month_name, amount_usd)
 
 head(ge_imports)
 ## save dataframe --------------------------------------------------------------
