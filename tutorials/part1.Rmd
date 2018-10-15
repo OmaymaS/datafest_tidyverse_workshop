@@ -1,0 +1,63 @@
+---
+title: "part1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load libraries
+
+```{r load libraries}
+## load {readr} and {dplyr} 
+library(readr)
+library(dplyr)
+```
+
+## Import data
+
+```{r import data}
+## read data
+ge_imports <- read_csv(paste0(here::here(), "/data/ge_imports.csv"))
+ge_exports <- read_csv(paste0(here::here(), "/data/ge_imports.csv"))
+
+## rename columns
+ge_imports <- ge_imports %>%  rename(imports_usd = amount_usd)
+ge_exports <- ge_exports %>%  rename(exports_usd = amount_usd)
+
+## join data
+ge_trade <- ge_imports %>% 
+  full_join(ge_exports)
+```
+
+
+## The pipe %>%
+```{r}
+
+```
+
+
+## select()
+
+- select `country`, `year`, `month` and `amount_usd`. Think about different ways to achieve this!
+- select all the columns except for `code`.
+
+```{r}
+## select country, year, monthand amount_usd
+
+## select all columns except code
+
+```
+
+
+## filter()
+
+## summarize()
+
+## group_by()
+
+## mutate()
+
+## arrange()
+
