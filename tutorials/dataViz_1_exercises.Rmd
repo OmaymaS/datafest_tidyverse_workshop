@@ -186,7 +186,7 @@ ggplot(data = gapminder_2007, aes(x = gdpPercap, y = lifeExp,
 
 - change the x-axis label to `log(gdpPercap)` using `labs()`.
 
-*What else other labels and titles can you set using `labs()`?*
+*What other labels and titles can you set using `labs()`?*
 
 ```{r 3.3}
 ## change the x-axis label to log(gdpPercap)
