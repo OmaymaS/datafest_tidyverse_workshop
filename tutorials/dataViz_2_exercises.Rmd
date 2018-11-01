@@ -38,7 +38,7 @@ googleplaystore <- read_csv("https://raw.githubusercontent.com/OmaymaS/datafest_
 googleplaystore
 ```
 
-**NOTE: **For more info about the variable description, check [Kaggle Dataset](https://www.kaggle.com/lava18/google-play-store-apps).
+**NOTE:** For more info about the variable description, check [Kaggle Dataset](https://www.kaggle.com/lava18/google-play-store-apps).
 
 
 # Explore Data
