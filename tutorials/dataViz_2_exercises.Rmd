@@ -38,6 +38,9 @@ googleplaystore <- read_csv("https://raw.githubusercontent.com/OmaymaS/datafest_
 googleplaystore
 ```
 
+**NOTE: **For more info about the variable description, check [Kaggle Dataset](https://www.kaggle.com/lava18/google-play-store-apps#googleplaystore.csv)
+
+
 # Explore Data
 
 ## 1. Applications reviews per `category`
@@ -146,7 +149,7 @@ apps_types
 
 - Recreate the previous plot with the percentage of applications instead of the count.
 
-**HINT:**consider using the `position` attribute.
+**HINT:** consider using the `position` attribute.
 
 ```{r 2.3, fig.height=8}
 ## recreate the previous plot with share instead of count
