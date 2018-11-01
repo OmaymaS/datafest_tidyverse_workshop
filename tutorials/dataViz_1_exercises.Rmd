@@ -9,9 +9,9 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align =
 ```
 
 
-In the following set of exercises you will explore patterns and trends in the `gapminder` dataset
+In the following set of exercises you will explore patterns and trends in the `gapminder` dataset.
 
-First, you need to load the following libraries:
+**First**, you need to install and load the following libraries:
 
 ```{r load libraries}
 library(ggplot2)    ## for data visualization
@@ -94,7 +94,6 @@ ggplot(## [WRITE CODE])+
 - Recreate the previous plot
 - Set the point size according to the population `pop`.
 
-
 ```{r 1.6}
 ## recreate the previous plot and set the size of points to pop
 ## [WRITE CODE]
@@ -133,7 +132,6 @@ plot_2007
 
 - Modify `plot_2007` using `facet_wrap()` to have a separate plot for each continent. *Notice how the factes are distrubuted in rows and columns*.
 
-
 ```{r 2.1, fig.width=10}
 ## modify plot_2007 to have a separate plot for each continent
 ## [WRITE CODE]
@@ -163,7 +161,6 @@ plot_2007
 ## plot lifeExp versus log(gdpPercap)
 ## [WRITE CODE]
 ```
-
 
 #### 3.2
 
@@ -214,7 +211,6 @@ plot_2007+
   ## [WRITE CODE]
 ```
 
-
 ### Multiple Geoms/Layers
 
 In the next set of exercises, you will explore and compare the change in `lifeExp` for four African countries.
@@ -250,7 +246,6 @@ ggplot(## [WRITE CODE])+
 ## add a points layer
 ## [WRITE CODE]
 ```
-
 
 ## Interactivity with `ggplotly` (Extra)
 
