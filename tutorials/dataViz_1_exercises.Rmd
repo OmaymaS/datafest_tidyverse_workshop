@@ -19,7 +19,7 @@ library(dplyr)      ## for data manipulation
 library(gapminder)  ## to use gapmider dataset
 ```
 
-Now, you are ready to follow the instructions and complete any missing code indicated by `## [WRITE CODE]`.
+Now, you are ready to follow the instructions and complete any missing code indicated by `## [WRITE CODE] ##`.
 
 ## Grammer of Graphics
 
@@ -56,7 +56,7 @@ str(gapminder)
 ```{r 1.2}
 ## extract the entries of year 2007
 gapminder_2007 <- gapminder %>% 
-  ## [WRITE CODE]
+  ## [WRITE CODE] ## ##
 ```
 
 #### 1.3
@@ -65,7 +65,7 @@ gapminder_2007 <- gapminder %>%
 
 ```{r 1.3}
 ## plot `lifeExp` versus `gdpPercap`
-ggplot(## [WRITE CODE])+
+ggplot(## [WRITE CODE] ##)+
   geom_point()  
 ```
 
@@ -76,7 +76,7 @@ ggplot(## [WRITE CODE])+
 
 ```{r 1.4}
 ## recreate the previous plot and set the points color to blue
-## [WRITE CODE]
+## [WRITE CODE] ##
 ```
 
 #### 1.5
@@ -86,7 +86,7 @@ ggplot(## [WRITE CODE])+
 
 ```{r 1.5}
 ## recreate the previous plot and color the points by continent
-## [WRITE CODE]
+## [WRITE CODE] ##
 ```
 
 #### 1.6
@@ -96,7 +96,7 @@ ggplot(## [WRITE CODE])+
 
 ```{r 1.6}
 ## recreate the previous plot and set the size of points to pop
-## [WRITE CODE]
+## [WRITE CODE] ##
 ```
 
 *How would you give all the points a fixed size?*
@@ -108,7 +108,7 @@ ggplot(## [WRITE CODE])+
 
 ```{r 1.7}
 ## recreate the previous plot and set  alpha to 0.75
-## [WRITE CODE]
+## [WRITE CODE] ##
 ```
 
 ### Facets (Small Multiples)
@@ -134,7 +134,7 @@ plot_2007
 
 ```{r 2.1, fig.width=10}
 ## modify plot_2007 to have a separate plot for each continent
-## [WRITE CODE]
+## [WRITE CODE] ##
 ```
 
 #### 2.2
@@ -143,7 +143,7 @@ plot_2007
 
 ```{r 2.2, fig.width=12}
 ## organize the plots corresponding to the 5 continents in 1 row
-## [WRITE CODE]
+## [WRITE CODE] ##
 ```
 
 ### Coordinates
@@ -159,7 +159,7 @@ plot_2007
 
 ```{r 3.1}
 ## plot lifeExp versus log(gdpPercap)
-## [WRITE CODE]
+## [WRITE CODE] ##
 ```
 
 #### 3.2
@@ -174,7 +174,7 @@ plot_2007
 ggplot(data = gapminder_2007, aes(x = gdpPercap, y = lifeExp,
                                   color = continent))+
   geom_point()+
-  ## [WRITE CODE]
+  ## [WRITE CODE] ##
 
 ```
 
@@ -194,7 +194,7 @@ ggplot(data = gapminder_2007, aes(x = gdpPercap, y = lifeExp,
                                   color = continent))+
   geom_point()+
   scale_x_log10()
-  ## [WRITE CODE]
+  ## [WRITE CODE] ##
 ```
 
 ### Themes 
@@ -208,7 +208,7 @@ ggplot(data = gapminder_2007, aes(x = gdpPercap, y = lifeExp,
 ```{r4.1}
 ## use `theme_minimal()`
 plot_2007+
-  ## [WRITE CODE]
+  ## [WRITE CODE] ##
 ```
 
 ### Multiple Geoms/Layers
@@ -222,7 +222,7 @@ In the next set of exercises, you will explore and compare the change in `lifeEx
 ```{r 5.1}
 ## extract the entries of the 4 countries
 countries_africa <- gapminder %>% 
-  filter(## [WRITE CODE]) 
+  filter(## [WRITE CODE] ##) 
 ```
 
 #### 5.2
@@ -233,8 +233,8 @@ countries_africa <- gapminder %>%
 *Can you see 4 lines corresponding to the 4 countries?*
 
 ```{r 5.2}
-ggplot(## [WRITE CODE])+
-  geom_line(## [WRITE CODE])
+ggplot(## [WRITE CODE] ##)+
+  geom_line(## [WRITE CODE] ##)
 ```
 
 #### 5.3
@@ -244,7 +244,7 @@ ggplot(## [WRITE CODE])+
 
 ```{r 5.3}
 ## add a points layer
-## [WRITE CODE]
+## [WRITE CODE] ##
 ```
 
 ## Interactivity with `ggplotly` (Extra)
