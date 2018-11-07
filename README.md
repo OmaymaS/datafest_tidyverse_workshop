@@ -2,7 +2,7 @@
 
 This repo includes the material for two workshops held in **Datafest Tbilisi**:
 
-- Data manipulation using `dplyr`.
+- Data manipulation using `dplyr`
 - Data visualization using `ggplot2`
 
 ## Getting Started 
@@ -20,10 +20,13 @@ This repo includes the material for two workshops held in **Datafest Tbilisi**:
 #### Option 2
 
 - Go to [Intro to the Tidyverse](https://rstudio.cloud/spaces/6529/join?access_code=FoNbx0Y2AtyZNeKbGAJtyAELvU2HxPtIwmIcoIQo) project on **Rstudio Cloud**.
+- Click on **Intro to the Tidyverse** project.
 
 #### Options 3
 
-- Use a jupyter notebook on [jupyter.org/try](http://jupyter.org/try)
+- Go to [jupyter.org/try](http://jupyter.org/try).
+- Click on **Try Jupyter with R**.
+- Install the `gapminder` package using `install.packages("tidyverse")`.
 
 ### Basic Checks
 
@@ -36,9 +39,12 @@ library(readr)
 library(gapminder)
 ```
 
-### Material and Exercises
+### Exercises 
 
 The material exist in one repo, which you can download or clone using:
 
 `git Clone https://github.com/OmaymaS/datafest_tidyverse_workshop.git`
 
+### Slides
+
+[TBA]
