@@ -15,7 +15,7 @@ This repo includes the material for two workshops held in **Datafest Tbilisi**:
 - Install Rstudio.
 - Install the `tidyverse` package using `install.packages("tidyverse")`.
 
-**NOTE:** For more details about R and Rstudion installation, check [Installing R and RStudio](https://moderndive.com/2-getting-started.html#installing-r-and-rstudio) section in [ModernDive](https://moderndive.com) book.
+**NOTE:** For more details about R and Rstudio installation, check [Installing R and RStudio](https://moderndive.com/2-getting-started.html#installing-r-and-rstudio) section in [ModernDive](https://moderndive.com) book.
 
 #### Option 2
 
@@ -23,11 +23,7 @@ Rstudio cloud [TBA]
 
 #### Options 3
 
-- Use a jupyter notebook on [http://jupyter.org/try](http://jupyter.org/try)
-
-### Material and Exercises
-
-The material exist in one repo, whihc you can clone using `git Clone https://github.com/OmaymaS/datafest_tidyverse_workshop.git`
+- Use a jupyter notebook on [jupyter.org/try](http://jupyter.org/try)
 
 ### Basic Checks
 
@@ -38,3 +34,10 @@ library(dplyr)
 library(ggplot2)
 library(readr)
 ```
+
+### Material and Exercises
+
+The material exist in one repo, which you can download it or clone using:
+
+`git Clone https://github.com/OmaymaS/datafest_tidyverse_workshop.git`
+
