@@ -1,0 +1,227 @@
+---
+title: "Introduction to Data Visualization Using ggplot2 - Part 2"
+output: html_document
+author: OmaymaS
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 10)
+```
+
+In the following exercises you will explore the [googleplaystore](https://raw.githubusercontent.com/OmaymaS/datafest_tidyverse_workshop/master/data/googleplaystore.csv) dataset; a slightly modified version of the original [Google Play Store Apps](https://www.kaggle.com/lava18/google-play-store-apps#googleplaystore.csv) on Kaggle. You will answer questions related to:
+
+- applications reviews per category.
+- free versus paid applications per category.
+- the distribution of application size over different categories.
+
+# Load Libraries 
+
+```{r load libraries}
+## load libraries 
+library(ggplot2)  ## for data visualization
+library(dplyr)    ## for data manipulation
+library(readr)    ## to use read_csv
+
+## set default theme
+theme_set(theme_minimal())
+```
+
+# Import Data
+
+```{r read data}
+## read data from github
+googleplaystore <- read_csv("https://raw.githubusercontent.com/OmaymaS/datafest_tidyverse_workshop/master/data/googleplaystore.csv")
+```
+
+```{r explore googleplaystore}
+## explore googleplaystore
+googleplaystore
+```
+
+**NOTE:** For more info about the variable description, check [Kaggle Dataset](https://www.kaggle.com/lava18/google-play-store-apps)
+
+
+# Explore Data
+
+## 1. Applications reviews per `category`
+
+### What is the total number of reviews for each category?
+
+#### 1.1
+
+- calculate the total number of reviews per category `reviews_all`.
+- arrange the dataframe (in a descending order) according to `reviews_all`.
+
+```{r 1.1.1}
+## calculate the number of reviews by category
+apps_reviews <- googleplaystore %>% 
+  group_by(category) %>% 
+  summarize(reviews_all = sum(reviews, na.rm = TRUE)) %>% 
+  arrange(desc(reviews_all))
+
+## view the resulting dataframe
+apps_reviews
+```
+
+#### 1.2
+
+- Extract the entries corresponding to the top ten categories in terms of total reviews.
+
+```{r 1.2.1}
+## select top 10 in apps_reviews_10
+apps_reviews_10 <- apps_reviews[1:10,]
+```
+
+- Create bar chart with `reviews_all` versus `category`. *Look at the order of the bars, what do you notice?*
+
+```{r 1.2.2}
+## create bar chart with reviews_all versus category
+ggplot(data = apps_reviews_10,
+       aes(x = category, y = reviews_all))+
+  geom_bar(stat = "identity")
+```
+
+#### 1.3
+
+- Recreate the previous plot with the bars ordered in a descending order based on `reviews_all`.
+- Assign the result to `top_10` and view it.
+
+```{r 1.3}
+## create a bar plot with a descending order based on reviews_all
+top_10 <- ggplot(data = apps_reviews_10,
+       aes(x = reorder(category, -reviews_all), y = reviews_all))+
+  geom_bar(stat = "identity")
+
+## view the plot
+top_10
+```
+
+#### 1.4
+
+- Modify `top_10` plot to flip the coordinates. 
+
+```{r 1.4}
+## flip the coordinates of top_10
+top_10+
+  coord_flip()
+```
+
+*What do you notice about the order of the bars?*
+
+## 2. Free Versus paid applications
+
+### What is the number of free/paid applications in each category?
+
+#### 2.1
+
+- Calculate the number of applications in each (`category`, `type`) group.
+- Assign the result to `apps_types` and view it.
+
+```{r 2.1}
+## calculate the number of applications per (category, type) groups
+apps_types <- googleplaystore %>% 
+  group_by(category, type) %>% 
+  summarize(apps = n())
+
+## view the result
+apps_types
+```
+
+#### 2.2
+
+- Create a bar plot with the number of apps versus each category.
+- Color the bars by the application `type`. *Pick the right attribute to set!*
+- Flip the coordinates to have horizontal bars.
+
+```{r 2.2, fig.height=8}
+## plot the number of applications vs. category, and color the bars by type
+ggplot(data = apps_types, aes(x = category, y = apps, fill = type))+
+  geom_bar(stat = "identity")+
+  coord_flip()
+```
+
+*Can you spot a category with zero paid applications?*
+
+### What is the share of free/paid applications in each category?
+
+#### 2.3
+
+- Recreate the previous plot with the percentage of applications instead of the count.
+
+**HINT:**consider using the `position` attribute.
+
+```{r 2.3, fig.height=8}
+## recreate the previous plot with share instead of count
+ggplot(data = apps_types, aes(x = category, y = apps, fill = type))+
+  geom_bar(stat = "identity", position = "fill")+
+  coord_flip()
+```
+
+*Try `position = "dodge"`, what do you notice?*
+
+## 3. Application size distribution
+
+### What is the distribution of applications `size`?
+
+#### 3.1 (Single category)
+
+- Extract the entries corresponding to the FAMILY `category`
+- Assign the result to `apps_family`
+
+```{r 3.1.1}
+## extract the entries corresponding to the FAMILY category
+apps_family <- googleplaystore %>% 
+  filter(category == "FAMILY")
+```
+
+- Create a histogram to show the distribution of `size` in `apps_family`.
+
+```{r 3.1.2}
+## create a histogram of size in apps_family data
+ggplot(data = apps_family, aes(size))+
+  geom_histogram()
+```
+
+*Notice how the the distributions are skewed. The high values can be interesting for further exploration!*
+
+#### 3.2 (Multiple categories)
+
+- Extract the entries corresponding to the categories *("FAMILY","GAME", "TOOLS", "MEDICAL", "BUSINESS", "PRODUCTIVITY")*.
+- Assign the result to `apps_top`
+
+```{r 3.2.1}
+## extract the data corresponding to the 6 given categories
+apps_top <- googleplaystore %>% 
+  filter(category %in% c("FAMILY","GAME", "TOOLS", "MEDICAL", "BUSINESS", "PRODUCTIVITY"))
+```
+
+- Plot the distribution of the application `size` in `apps_top`
+- Color the histograms by `category`.
+- Use `facet_wrap()` to separate the six categories in six plots.
+
+```{r 3.2.2}
+## create a plot with 6 histograms corresponding to the 6 groups
+ggplot(data = apps_top, aes(size, fill = category))+
+  geom_histogram()+
+  facet_wrap(~category)
+```
+
+#### 3.3 (Multiple categories: a closer look!)
+
+Look closer at the majority of applications:
+
+- Recreate the previous Plot with the histograms.
+- Set the `binwidth` to 5.
+- Set the x-axis limits to `(0, 150)`. 
+
+```{r 3.3}
+## modify the binwidth and x-axis limit
+ggplot(data = apps_top, aes(size, fill = category))+
+  geom_histogram(binwidth = 5)+
+  facet_wrap(~category)+
+  coord_cartesian(xlim = c(0, 150))+
+  labs(title = "Distribution of the size of android applications on googleplay",
+       subtitle = "(Only applications with size <= 150 in the dataset)")
+```
+
+*What else could you find in this dataset? keep exploring!*
