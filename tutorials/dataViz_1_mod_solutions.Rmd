@@ -1,0 +1,289 @@
+---
+title: "Introduction to Data Visualization Using ggplot2"
+output: html_document
+author: OmaymaS
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.align = "center", cache = TRUE)
+```
+
+In the following set of exercises you will explore patterns and trends in the `gapminder` dataset.
+
+**First**, you need to install and load the following libraries:
+
+```{r load libraries}
+library(ggplot2)    ## for data visualization
+library(dplyr)      ## for data manipulation
+library(gapminder)  ## to use gapmider dataset
+
+# ggplot2::theme_set(theme_minimal())
+ggplot2::theme_set(theme_minimal()+theme(text = element_text(size=20)))
+```
+
+Now, you are ready to follow the instructions and complete any missing code indicated by `## [WRITE CODE]`.
+
+## Grammer of Graphics
+
+Components:
+
+- Data
+- Aesthetics
+- Geometries 
+- Facets
+- Statistics
+- Coordinates 
+- Themes 
+
+### Data and Aesthetics
+
+#### 1.1
+
+- Explore the `gapminder` dataset.
+
+**NOTE**: To see a detailed description of the variables, type `?gapminder`
+
+```{r 1.1.1}
+## show the gapminder dataframe
+gapminder 
+```
+
+```{r 1.1.2}
+## show a summary of the dataset
+str(gapminder)
+```
+
+#### 1.2
+
+- Extract the entries corresponding to year 2002 using `filter()`.
+- Assign the resulting dataframe to `gapminder_2002`.
+
+```{r 1.2}
+## extract the entries of year 2002
+gapminder_2002 <- gapminder %>% 
+  filter(year == 2002)
+```
+
+#### 1.3
+
+- Create a scatter plot with `lifeExp` versus `gdpPercap`.
+
+```{r 1.3.1}
+## plot `lifeExp` versus `gdpPercap`
+ggplot(data = gapminder_2002, aes(x = gdpPercap, y = lifeExp))+ 
+  geom_point()
+```
+
+```{r 1.3.2}
+ggplot(data = gapminder_2002, aes(x = gdpPercap, y = lifeExp))
+  
+```
+
+
+#### 1.4
+
+- Recreate the previous plot.
+- Change the color of ALL the points to "blue".
+
+```{r 1.4}
+## recreate the previous plot and set the points color to blue
+ggplot(data = gapminder_2002, aes(x = gdpPercap, y = lifeExp))+
+  geom_point(color = "blue")
+```
+
+#### 1.5
+
+- Recreate the previous plot.
+- Color the points by `continent` instead of a single color.
+
+```{r 1.5}
+## recreate the previous plot and color the points by continent
+ggplot(data = gapminder_2002, aes(x = gdpPercap, y = lifeExp,
+                                  color = continent))+
+  geom_point()
+```
+
+#### 1.6
+
+- Recreate the previous plot
+- Set the point size according to the population `pop`.
+
+```{r 1.6}
+## recreate the previous plot and set the size of points to pop
+ggplot(data = gapminder_2002, aes(x = gdpPercap, y = lifeExp,
+                                  color = continent,
+                                  size =  pop))+
+  geom_point()
+```
+
+*How would you give all the points a fixed size?*
+
+#### 1.7
+
+- Recreate the previous plot.
+- Set the points transparency to 0.75 using the `alpha` attribute.
+
+```{r 1.7}
+## recreate the previous plot and set  alpha to 0.7
+plot_2002 <- ggplot(data = gapminder_2002, aes(x = gdpPercap, y = lifeExp,
+                                               color = continent,
+                                               size =  pop))+
+  geom_point(alpha = 0.7)
+  # guides(size = FALSE)
+  # labs(x = "GDP per Capita", y = "Life Expectancy",
+  #      title = "Life Expectancy Vs. GDP per Capita (2002)")
+
+plot_2002
+```
+
+### Facets (Small Multiples)
+
+**What if you wanted to have a separate plot for each continent on the same scale?** 
+
+
+#### 2.1
+
+- Modify `plot_2002` using `facet_wrap()` to have a separate plot for each continent. *Notice how the factes are distrubuted in rows and columns*.
+
+```{r 2.1, fig.width=10}
+## modify plot_2002 to have a separate plot for each continent
+plot_2002+
+  facet_wrap(~continent)
+```
+
+#### 2.2
+
+- Modify `plot_2002` to distribute the five plots in one row.
+
+```{r 2.2, fig.width=12}
+## organize the plots corresponding to the 5 continents in 1 row
+plot_2002+
+  facet_wrap(~continent, nrow = 1)
+```
+
+### Coordinates
+
+**Now, what if you wanted to have a log scale on the x axis?**
+
+#### 3.1
+
+- Using `gapminder_2002`:
+
++ create a scatter plot with `lifeExp` versus `log(gdpPercap)`. 
++ color the points by continent.
+
+```{r 3.1}
+## plot lifeExp versus log(gdpPercap)
+ggplot(data = gapminder_2002, aes(x = log(gdpPercap), y = lifeExp,
+                                  color = continent))+
+  geom_point()
+```
+
+#### 3.2
+
+- Recreate the previous plot in a different way:
+
++ plot `lifeExp` Vs. `gdpPercap`.
++ use `scale_x_log10()` to change the x axis scale
+
+```{r 3.2}
+## plot lifeExp versus gdpPercap and use scale_x_log10()
+ggplot(data = gapminder_2002, aes(x = gdpPercap, y = lifeExp,
+                                  color = continent))+
+  geom_point()+
+  scale_x_log10()
+```
+
+**NOTE:** the x axis label could be misleading, because it is actually `log(gdpPercap)` not `gdpPercap`.
+
+**What if you wanted to change the axes labels?**
+
+#### 3.3
+
+- change the x-axis label to `log(gdpPercap)` using `labs()`.
+
+*What other labels and titles can you set using `labs()`?*
+
+```{r 3.3}
+## change the x-axis label to log(gdpPercap)
+ggplot(data = gapminder_2002, aes(x = gdpPercap, y = lifeExp,
+                                  color = continent))+
+  geom_point()+
+  scale_x_log10()+
+  labs(x = "log(gdpPercap)")
+```
+
+### Themes 
+
+**What if you wanted to change the gray background of the plots?**
+
+#### 4.1
+
+- Use `theme_minimal()` to change the theme of `plot_2002`. *Try to experiment with other themes!*
+
+```{r4.1}
+## use `theme_minimal()`
+plot_2002+
+  theme_minimal()
+```
+
+### Multiple Geoms/Layers
+
+In the next set of exercises, you will explore and compare the change in `lifeExp` for four African countries.
+
+#### 5.1
+
+- Extract the entries corresponding to the four countries **["Rwanda", "South Africa", "Mozambique", "Kenya"]**.
+
+```{r 5.1}
+## extract the entries of the 4 countries
+countries_africa <- gapminder %>% 
+  filter(country %in% c("Rwanda", "South Africa", "Mozambique", "Kenya")) 
+```
+
+#### 5.2
+
+- Create a line plot with `lifeExp` change over time for the countries in `countries_africa`.
+- Set the line size to 1.3
+
+*Can you see 4 lines corresponding to the 4 countries?*
+
+```{r 5.2}
+## plot lifeExp over time for the 4 countries
+ggplot(data = countries_africa, aes(x = year, y = lifeExp,
+                                    color = country))+
+  geom_line(size = 1.3)
+```
+
+#### 5.3
+
+- Create a line plot with `lifeExp` change over time for the countries in `countries_africa`.
+- Add a points layer to the following line plot.
+- Set the theme to `theme_minimal()`.
+
+```{r 5.3}
+## add a points layer
+ggplot(data = countries_africa, aes(x = year, y = lifeExp,
+                                    color = country))+
+  geom_line()+
+  geom_point()+ 
+  theme_minimal()
+```
+
+## Interactivity with `ggplotly` (Extra)
+
+**What if you wanted to see more details about each point?**
+
+#### 6.1
+
+- use `ggplotly()` function to turn `plot_2002` into an interactive plot.
+
+*Hover over the points and check the tools on the upper toolbar.*
+
+```{r 6.1}
+## load library
+library(plotly)
+
+## pass plot_2002 to ggplotly
+ggplotly(plot_2002)
+```
