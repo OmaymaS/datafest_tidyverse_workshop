@@ -43,11 +43,11 @@ The material exists in one repo, which you can download or clone using:
 
 `git Clone https://github.com/OmaymaS/datafest_tidyverse_workshop.git`
 
-## Exercises
+#### Exercises
 
 The `./tutorial` directory includes seperate `.Rmd` files with exercises and solutions.
 
-## Slides
+#### Slides
 
 - [Data Manipulation using dplyr (First Steps)](https://speakerdeck.com/omaymas)
 - Data Visualization using ggplot2 [TBA]
