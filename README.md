@@ -9,18 +9,18 @@ This repo includes the material for two workshops held in **Datafest Tbilisi**:
 
 ### Environment
 
-#### Option 1 *(Local)*
+#### Option 1 
+
+- Go to [Intro to the Tidyverse](https://rstudio.cloud/spaces/6529/join?access_code=FoNbx0Y2AtyZNeKbGAJtyAELvU2HxPtIwmIcoIQo) project on **Rstudio Cloud**.
+- Click on **Intro to the Tidyverse** project.
+
+#### Option 2 *(Local)*
 
 - Install R.
 - Install Rstudio.
 - Install the `tidyverse`  and `gapminder` packages using `install.packages("tidyverse", "gapminder")`.
 
 **NOTE:** For more details about R and Rstudio installation, check [Installing R and RStudio](https://moderndive.com/2-getting-started.html#installing-r-and-rstudio) section in [ModernDive](https://moderndive.com) book.
-
-#### Option 2 
-
-- Go to [Intro to the Tidyverse](https://rstudio.cloud/spaces/6529/join?access_code=FoNbx0Y2AtyZNeKbGAJtyAELvU2HxPtIwmIcoIQo) project on **Rstudio Cloud**.
-- Click on **Intro to the Tidyverse** project.
 
 #### Options 3
 
@@ -37,13 +37,17 @@ library(tidyverse)
 library(gapminder)
 ```
 
-### Exercises 
+### Material
 
-The material exist in one repo, which you can download or clone using:
+The material exists in one repo, which you can download or clone using:
 
 `git Clone https://github.com/OmaymaS/datafest_tidyverse_workshop.git`
 
-### Slides
+## Exercises
+
+The `./tutorial` directory includes seperate `.Rmd` files with exercises and solutions.
+
+## Slides
 
 - [Data Manipulation using dplyr (First Steps)](https://speakerdeck.com/omaymas)
 - Data Visualization using ggplot2 [TBA]
