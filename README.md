@@ -50,4 +50,4 @@ The `./tutorial` directory includes seperate `.Rmd` files with exercises and sol
 #### Slides
 
 - [Data Manipulation using dplyr (First Steps)](https://speakerdeck.com/omaymas)
-- Data Visualization using ggplot2 [TBA]
+- [Data Visualization using ggplot2](https://github.com/OmaymaS/datafest_tidyverse_workshop/blob/master/slides/data_visualization_with_ggplot2.pdf)
