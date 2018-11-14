@@ -18,7 +18,7 @@ This repo includes the material for two workshops held in **Datafest Tbilisi**:
 
 - Install R.
 - Install Rstudio.
-- Install the `tidyverse`  and `gapminder` packages using `install.packages("tidyverse", "gapminder")`.
+- Install the `tidyverse`  and `gapminder` packages using `install.packages(c("tidyverse", "gapminder"))`.
 
 **NOTE:** For more details about R and Rstudio installation, check [Installing R and RStudio](https://moderndive.com/2-getting-started.html#installing-r-and-rstudio) section in [ModernDive](https://moderndive.com) book.
 
